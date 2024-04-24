@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://h-forum.vercel.app",
+    origin: true,
     credentials: true,
   })
 );
@@ -229,7 +229,7 @@ const server = app.listen(PORT, () => {
 const io = new Server(server, {
   secure: true,
   cors: {
-    origin: "https://h-forum.vercel.app",
+    origin: true,
     methods: ["GET", "POST"],
     credentials: true,
   },

@@ -1,30 +1,32 @@
 import axios from "axios";
 import React from "react";
 
-const Arrowup = ({ id }) => {
+import { toast } from "react-toastify";
+
+
+const Arrowdown = ({ id }) => {
   const userId = JSON.parse(localStorage.getItem("user"))._id;
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `https://discussion-forum-production.up.railway.app/upvote/${id}`,
-        {
-          userId,
-        }
-      );
+      const res = await axios.post(`http://localhost:8080/downvote/${id}`, {
+        userId,
+      });
       console.log(res.status);
       if (res.status === 200) {
-        alert("Upvoted successfully");
+        alert("downvoted successfully");
+        // toast.success("downvoted successfully");
       } else {
-        alert("You have already upvoted");
+        alert("You have already downvoted");
+        // toast.error("You have already downvoted");
       }
     } catch (err) {
       console.log(err);
-      alert("You have already upvoted");
+      alert("You have already downvoted");
+      // toast.error("You have already downvoted");
     }
   };
-
   return (
     <svg
       onClick={handleClick}
@@ -38,10 +40,10 @@ const Arrowup = ({ id }) => {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
+        d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"
       />
     </svg>
   );
 };
 
-export default Arrowup;
+export default Arrowdown;

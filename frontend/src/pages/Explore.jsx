@@ -52,13 +52,12 @@ const hexColorCodes = [
 
 const Explore = () => {
   const navigateToTopic = (topic) => {
-    window.location.href = `/explore/${topic.toLowerCase()}`;
+    window.location.href = `/explore/${topic}`;
   };
   return (
-    <div className="w-full md:w-[50%] text-center h-screen mt-8">
-      <h1 className="text-xl text-gray-800 dark:text-white">
-        {" "}
-        Select A Topic To Explore
+    <div className="w-full  flex flex-col items-center text-center h-screen mt-8">
+      <h1 className="text-xl text-white">
+        Explore
       </h1>
       <div className="grid grid-cols-3 md:grid-cols-4 mt-3 items-center">
         {discussionTopics.map((topic, index) => (
@@ -71,7 +70,7 @@ const Explore = () => {
               className="h-2 md:w-4 w-2 md:h-4 rounded-full"
               style={{ backgroundColor: hexColorCodes[index] }}
             ></div>
-            <h3 className="text-xs">{topic}</h3>
+            <h3 className="text-xs text-gray-400">{topic}</h3>
           </div>
         ))}
       </div>

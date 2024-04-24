@@ -19,7 +19,7 @@ import { io } from "socket.io-client";
 import { addUsers } from "./context/onlineSlice";
 const queryClient = new QueryClient();
 
-export const socket = io("https://discussion-forum-production.up.railway.app", {
+export const socket = io("http://localhost:8080", {
   withCredentials: true,
   secure: true,
 });
@@ -52,9 +52,7 @@ const Layout = () => {
     });
 
     const getUsers = async () => {
-      const res = await axios.get(
-        "https://discussion-forum-production.up.railway.app/allusers"
-      );
+      const res = await axios.get("http://localhost:8080/allusers");
       setUsers(res.data);
     };
     getUsers();
@@ -64,21 +62,22 @@ const Layout = () => {
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <div
         className="relative w-screen flex flex-col justify-center items-center 
-      overflow-x-hidden bg-white dark:bg-[#32353F]"
+      overflow-x-hidden bg-[#17171a]"
       >
         <Navbar />
         <div
-          className="w-full h-screen flex justify-center items-start px-4 
-        md:px-12 pt-12 dark:bg-[#32353F]"
+          className="w-full h-screen flex justify-center xl:justify-end items-start px-4 
+        md:px-2 pt-12 dark:bg-[#32353F]"
         >
-          <Sidebar />
           <Outlet />
-          <div
+          <Sidebar />
+          {/* <div
             className="right-section
           hidden md:block
           h-80 fixed z-10 top-24 right-28"
           >
             <CreateButton />
+
             <div
               className="mt-8  py-4 px-3 rounded-md flex
          flex-col items-start gap-5"
@@ -99,7 +98,7 @@ const Layout = () => {
                   );
                 })}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </QueryClientProvider>
@@ -156,10 +155,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  const theme = useSelector((state) => state.theme.isDark);
 
   return (
-    <div className={`h-screen ${theme ? "dark" : ""}`}>
+    <div className={`h-screen`}>
       <RouterProvider router={router} />
     </div>
   );

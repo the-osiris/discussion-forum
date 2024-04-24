@@ -13,6 +13,8 @@ import { Toaster } from "react-hot-toast";
 import Loading from "./Loading";
 import NothingHere from "./NothingHere";
 
+import { Badge } from "rsuite";
+
 const Content = () => {
   const { topic } = useParams();
   const [openId, setOpenId] = React.useState([]);
@@ -21,47 +23,53 @@ const Content = () => {
   const { isLoading, data } = useQuery("getAllQuestions", () => {
     if (topic) {
       return newRequests
-        .get(`https://discussion-forum-production.up.railway.app/find/${topic}`)
+        .get(`http://localhost:8080/find/${topic}`)
         .then((res) => res.data);
     } else {
       return newRequests
-        .get("https://discussion-forum-production.up.railway.app/questions")
+        .get("http://localhost:8080/questions")
         .then((res) => res.data);
     }
   });
+
+  console.log(data)
 
   if (isLoading) return <Loading />;
 
   return (
     <div
-      className="md:w-[60%] flex flex-col items-center gap-y-5 
-    md:gap-8 my-8 "
+      className="md:w-full flex flex-col items-center xl:items-end gap-y-5 
+    md:gap-8 my-8 pb-5"
     >
       <Toaster />
       {data.length > 0 &&
         data.map((question, index) => {
-          console.log("question", question);
           return (
             <div
               key={index}
-              className="w-[96%] md:w-[80%] mx-12 flex flex-col 
-              items-end  p-3 md:p-4 rounded-md bg-purple-100
-               dark:bg-slate-400"
+              className="w-[96%] md:w-[80%] mx-12 flex flex-col  items-end  p-3 md:p-4 rounded-md bg-[#28282B]"
             >
               <div
-                className="w-full bg-white dark:bg-[#1E212A]
-              
-              p-4 md:p-5 rounded-lg shadow-md flex items-start gap-5"
+                className="w-full bg-white p-4 md:p-5 rounded-lg shadow-md flex items-start gap-5 relative"
               >
+                <div className="grid grid-cols-4 hidden md:block absolute right-2 top-2">
+                  {
+                    question.tags.map((tag, index) => {
+                      return (
+                        <Badge className="mx-1" content={tag} />
+                      )
+                    })
+                    }
+                </div>
                 <div className="left-section space-y-1 text-center">
                   <Arrowup id={question._id} />
-                  <h3 className="text-sm md:text-base">
+                  <h3 className="text-sm md:text-base text-black">
                     {question?.upvote?.length || 0}
                   </h3>
                   <Arrowdown id={question._id} />
                 </div>
                 <div className="right-section w-full">
-                  <h1 className="text-base md:text-lg dark:text-white">
+                  <h1 className="text-base md:text-lg">
                     {question?.question}
                   </h1>
                   <p className="text-sm md:text-base">
@@ -80,18 +88,17 @@ const Content = () => {
               {openId.find((ele) => ele === index + 1) && (
                 <>
                   {question?.replies?.map((answer, index) => {
-                    console.log("answer", answer);
+                    // console.log("answer", answer);
                     return (
                       <div key={answer._id} className="flex items-center gap-4">
                         {/* fix this */}
-                        <img
+                        {/* <img
                           className="h-4 md:h-6 w-4 md:w-6"
                           src="https://cdn.icon-icons.com/icons2/2596/PNG/512/nested_arrows_icon_155086.png"
                           alt=""
-                        />
+                        /> */}
                         <div
-                          className="   bg-white dark:bg-[#32353F] dark:text-white
-          max-w-xl p-5 rounded-lg shadow-md flex flex-col items-start gap-5 mt-2"
+                          className="bg-white max-w-xl p-5 rounded-lg shadow-md flex flex-col items-start gap-5 mt-2"
                         >
                           <p className="text-inherit">{answer?.reply}</p>
                           <UserInfo answer={answer} />

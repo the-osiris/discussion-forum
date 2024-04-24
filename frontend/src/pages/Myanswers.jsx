@@ -14,9 +14,7 @@ const Myanswers = () => {
 
   const { isLoading, data } = useQuery("getMyQuestions", () =>
     newRequests
-      .get(
-        `https://discussion-forum-production.up.railway.app/my-questions/${id}`
-      )
+      .get(`http://localhost:8080/my-questions/${id}`)
       .then((res) => res.data)
   );
 
@@ -29,22 +27,18 @@ const Myanswers = () => {
 
   return (
     <div
-      className="h-full w-full md:w-[60%] flex flex-col items-center 
-    gap-8 "
+      className="h-full w-full flex flex-col items-center xl:items-end  "
     >
       {data.length > 0 &&
         data.map((question, index) => (
           <div
             key={index}
-            className="w-full my-8 md:w-[80%] md:mx-12 flex flex-col items-end border 
-          
-          p-2
-          md:p-4 rounded-md bg-purple-100"
+            className="w-full mt-8 md:w-[80%] md:mx-12 flex flex-col items-end p-2 md:p-4 rounded-md bg-black"
           >
             <div className="w-full bg-white p-4 md:p-5 rounded-lg shadow-md flex items-start gap-5">
               <div className="left-section space-y-1 text-center">
                 <Arrowup id={question._id} />
-                <h3 className="text-sm md:text-base">
+                <h3 className="text-sm md:text-base text-black">
                   {question?.upvote?.length || 0}
                 </h3>
                 <Arrowdown id={question._id} />

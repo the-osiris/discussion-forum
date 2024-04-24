@@ -16,7 +16,7 @@ const Logout = () => {
       stroke="currentColor"
       className="
       md:hidden
-      w-4 h-4 md:w-5 md:h-5 cursor-pointer dark:text-white"
+      w-6 h-6 md:w-5 md:h-5 cursor-pointer text-white"
     >
       <path
         strokeLinecap="round"

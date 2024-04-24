@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "rsuite/dist/rsuite.css";
 
 h3 {
   @apply text-purple-600 font-bold;

@@ -17,7 +17,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://discussion-forum-production.up.railway.app/login",
+        "http://localhost:8080/login",
         user
       );
       if (res.status === 200) {
